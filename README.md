@@ -16,5 +16,9 @@
 <img src = "hw7/Map-Simulate.png"></br>
 ## Result from the cellphone:
 <img src = "hw7/Map_IOS.PNG"></br>
-
+# Step 4: Covidapi
+## Result from emulator:
+<img src = "hw7/PCstep4.png"></br>
+## Result from the cellphone:
+<img src = "hw7/Phonestep4.PNG"></br>
 
