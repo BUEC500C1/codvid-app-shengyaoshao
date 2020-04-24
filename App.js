@@ -5,136 +5,215 @@ import {
   Text,
   View,
 } from 'react-native'
-/*
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Welcome to covid project</Text>
-    </View>
-  );
-}
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-*/
-/*
-function HelloWorldApp() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-      }}>
-      <Text>Hello, world!</Text>
-    </View>
-  )
+export default class Map extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      countryname:'',
+      totalCases: '',
+      totalRecovered: '',
+      totalDeaths: '',
+      totalCNCases: '',
+      totalCNRecovered: '',
+      totalCNDeaths: '',
+      totalCACases: '',
+      totalCARecovered: '',
+      totalCADeaths: '',
+      totalMXCases: '',
+      totalMXRecovered: '',
+      totalMXDeaths: '',
+      totalCBCases: '',
+      totalCBRecovered: '',
+      totalCBDeaths: '',
+      totalGMCases: '',
+      totalGMRecovered: '',
+      totalGMDeaths: '',
+      jsondata:[]
+    };
 }
-export default HelloWorldApp;
-*/
-/*
-const styles = StyleSheet.create({
-  center: {
-    flex: 0.2,
-    justifyContent: "center",
-    alignItems: 'center'
+  componentDidMount() {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    fetch('https://api.covid19api.com/summary', requestOptions)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          totalCases: json['Countries'][236]['TotalConfirmed'],
+        });
+        this.setState({
+          totalRecovered: json['Countries'][236]['TotalRecovered'],
+        });        
+        this.setState({
+          totalDeaths: json['Countries'][236]['TotalDeaths'],
+        });
+        this.setState({
+          countryname: json['Countries'][236]['Country'],
+        });
+        this.setState({
+          totalCNCases: json['Countries'][45]['TotalConfirmed'],
+        });
+        this.setState({
+          totalCNRecovered: json['Countries'][45]['TotalRecovered'],
+        });        
+        this.setState({
+          totalCNDeaths: json['Countries'][45]['TotalDeaths'],
+        });
+        this.setState({
+          totalCACases: json['Countries'][39]['TotalConfirmed'],
+        });
+        this.setState({
+          totalCARecovered: json['Countries'][39]['TotalRecovered'],
+        });        
+        this.setState({
+          totalCADeaths: json['Countries'][39]['TotalDeaths'],
+        });
+        this.setState({
+          totalMXCases: json['Countries'][142]['TotalConfirmed'],
+        });
+        this.setState({
+          totalMXRecovered: json['Countries'][142]['TotalRecovered'],
+        });        
+        this.setState({
+          totalMXDeaths: json['Countries'][142]['TotalDeaths'],
+        });
+        this.setState({
+          totalCBCases: json['Countries'][55]['TotalConfirmed'],
+        });
+        this.setState({
+          totalCBRecovered: json['Countries'][55]['TotalRecovered'],
+        });        
+        this.setState({
+          totalCBDeaths: json['Countries'][55]['TotalDeaths'],
+        });
+        this.setState({
+          totalGMCases: json['Countries'][89]['TotalConfirmed'],
+        });
+        this.setState({
+          totalGMRecovered: json['Countries'][89]['TotalRecovered'],
+        });        
+        this.setState({
+          totalGMDeaths: json['Countries'][89]['TotalDeaths'],
+        });
+        this.setState({ 
+          jsondata: json.Global,
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
-})
-
-function Greeting(props) {
-  return (
-    <View style={styles.center}>
-      <Text>Hello {props.name}!</Text>
-    </View>
-  );
-}
-
-function LotsOfGreetings() {
-  return (
-    <View style={[styles.center, {top: 50}]}>
-      <Greeting name='Rexxar' />
-      <Greeting name='Jaina' />
-      <Greeting name='Valeera' />
-    </View>
-  );
-}
-
-export default LotsOfGreetings;
-*/
-/*
-class App extends Component {
-  state = {
-    count: 0
-  }
-
-  onPress = () => {
-    this.setState({
-      count: this.state.count + 1
-    })
-  }
-
- render() {
+  render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-         style={styles.button}
-         onPress={this.onPress}
+
+      <View>
+        <MapView
+          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.map}
+          region={{
+            
+            latitude: 37,
+            longitude: -100,
+            latitudeDelta: 35,
+            longitudeDelta: 35,
+            
+          }}
         >
-         <Text>Click me</Text>
-        </TouchableOpacity>
-        <View style={styles.countContainer}>
-          <Text>
-            You clicked { this.state.count } times
-          </Text>
-        </View>
+          <Marker
+          coordinate = {{latitude: 40, longitude: -100}}
+          >
+            <Callout>
+              <Text style = {styles.text}>{this.state.countryname}</Text>
+              <Text style = {styles.text}>Totoal Confirmed:{this.state.totalCases}</Text>
+              <Text style = {styles.text}>Totoal Recovered:{this.state.totalRecovered}</Text>
+              <Text style = {styles.text}>Totoal Deaths:{this.state.totalDeaths}</Text>
+            </Callout>
+          </Marker>
+          <Marker
+          coordinate = {{latitude: 35.8, longitude: 104}}
+          >
+            <Callout>
+              <Text style = {styles.text}>China</Text>
+              <Text style = {styles.text}>Totoal Confirmed:{this.state.totalCNCases}</Text>
+              <Text style = {styles.text}>Totoal Recovered:{this.state.totalCNRecovered}</Text>
+              <Text style = {styles.text}>Totoal Deaths:{this.state.totalCNDeaths}</Text>
+            </Callout>
+          </Marker>
+          <Marker
+          coordinate = {{latitude: 56, longitude: -106}}
+          >
+            <Callout>
+              <Text style = {styles.text}>Cannada</Text>
+              <Text style = {styles.text}>Totoal Confirmed:{this.state.totalCACases}</Text>
+              <Text style = {styles.text}>Totoal Recovered:{this.state.totalCARecovered}</Text>
+              <Text style = {styles.text}>Totoal Deaths:{this.state.totalCADeaths}</Text>
+            </Callout>
+          </Marker>
+          <Marker
+          coordinate = {{latitude: 19.5, longitude: -100}}
+          >
+            <Callout>
+              <Text style = {styles.text}>Mexico</Text>
+              <Text style = {styles.text}>Totoal Confirmed:{this.state.totalMXCases}</Text>
+              <Text style = {styles.text}>Totoal Recovered:{this.state.totalMXRecovered}</Text>
+              <Text style = {styles.text}>Totoal Deaths:{this.state.totalMXDeaths}</Text>
+            </Callout>
+          </Marker>
+          <Marker
+          coordinate = {{latitude: 21.5, longitude: -77.7}}
+          >
+            <Callout>
+              <Text style = {styles.text}>Cuba</Text>
+              <Text style = {styles.text}>Totoal Confirmed:{this.state.totalCBCases}</Text>
+              <Text style = {styles.text}>Totoal Recovered:{this.state.totalCBRecovered}</Text>
+              <Text style = {styles.text}>Totoal Deaths:{this.state.totalCBDeaths}</Text>
+            </Callout>
+          </Marker>
+          <Marker
+          coordinate = {{latitude: 15.7, longitude: -90}}
+          >
+            <Callout>
+              <Text style = {styles.text}>Guatemala</Text>
+              <Text style = {styles.text}>Totoal Confirmed:{this.state.totalGMCases}</Text>
+              <Text style = {styles.text}>Totoal Recovered:{this.state.totalGMRecovered}</Text>
+              <Text style = {styles.text}>Totoal Deaths:{this.state.totalGMDeaths}</Text>
+            </Callout>
+          </Marker>
+
+        </MapView>
       </View>
     )
   }
-}
+};
 
 const styles = StyleSheet.create({
+  popup:{
+    backgroundColor: '#233',
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent:'center'
   },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10,
-    marginBottom: 10
-  }
-})
-
-export default App;
-*/
-
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-export default () => (
-  <View>
-    <MapView
-      provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-      style={styles.map}
-      region={{
-        latitude: 42.36,
-        longitude: -71.06,
-        latitudeDelta: 1.5,
-        longitudeDelta: 1.5,
-      }}
-    >
-    </MapView>
-  </View>
-);
-
-const styles = StyleSheet.create({
   map: {
      height: '100%',
      width: '100%'
+  },
+  title: {
+    color: '#223',
+    padding:20,
+    fontWeight: 'bold',
+    fontSize: 30,
+    textAlign: 'center'
+  },
+  text: {
+    color: '#000',
+    padding: 2,
+    fontSize:15,
+    textAlign: 'center'
   },
 });
