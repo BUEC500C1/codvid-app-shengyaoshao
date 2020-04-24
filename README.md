@@ -21,4 +21,8 @@
 <img src = "hw7/PCstep4.png"></br>
 ## Result from the cellphone:
 <img src = "hw7/Phonestep4.PNG"></br>
-
+# Step 6
+## Result from emulator:
+<img src = "hw7/mapphone.png"></br>
+## Result from the cellphone:
+<img src = "hw7/mappc.PNG"></br>
